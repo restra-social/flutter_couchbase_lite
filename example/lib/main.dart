@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String _message;
+    String id;
 
     try{
 //      String _cbInstance = await FlutterCouchbaseLite.startReplicator("ws://localhost:4984/todolite", "PUSH_AND_PULL", <String, String>{
@@ -33,18 +33,17 @@ class _MyAppState extends State<MyApp> {
     String msg = await FlutterCouchbaseLite.initDatabaseWithName("todolite");
     print(msg);
 
-    String id = await FlutterCouchbaseLite.saveDocument(<String, Object>{
+    id = await FlutterCouchbaseLite.saveDocument(<String, Object>{
         "id": 123,
         "type": "SomeType"
     });
-    print(id);
 
     }catch (e){
       print(e.toString());
     }
 
     setState(() {
-      _message = _message;
+      _message = id;
     });
   }
 
@@ -56,7 +55,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: new Center(
-          child: new Text('Running on: $_message\n'),
+          child: new Text('Doc Id: $_message\n'),
         ),
       ),
     );

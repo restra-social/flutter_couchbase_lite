@@ -1,6 +1,7 @@
 package com.restra.fluttercouchbaselite;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.Map;
 
@@ -37,7 +38,8 @@ public class FlutterCouchbaseLitePlugin implements MethodCallHandler {
     public void onMethodCall(MethodCall call, Result result) {
         switch (call.method) {
             case ("initDatabaseWithName"):
-                final String _name = call.arguments();
+                final String _name = call.argument("name");
+                Log.i("PARAM", _name);
                 try {
                     cbManager.initDatabaseWithName(_name);
                 } catch (Exception e){

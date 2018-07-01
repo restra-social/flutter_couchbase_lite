@@ -8,7 +8,9 @@ abstract class FlutterCouchbaseLite {
   static Future<String> initDatabaseWithName(String _name) async {
     try {
       final String result =
-      await _channel.invokeMethod('initDatabaseWithName', _name);
+      await _channel.invokeMethod('initDatabaseWithName', <String, String>{
+        "name": _name,
+      });
       return result;
     } on PlatformException catch (e) {
       throw 'unable to init database $_name: ${e.message}';
