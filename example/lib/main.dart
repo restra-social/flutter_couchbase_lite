@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:flutter/services.dart';
 import 'package:flutter_couchbase_lite/flutter_couchbase_lite.dart';
 
@@ -12,7 +11,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  String _message = 'Unknown !';
 
   @override
   void initState() {
@@ -22,21 +21,30 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      platformVersion = await FlutterCouchbaseLite.platformVersion;
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+    String _message;
+
+    try{
+//      String _cbInstance = await FlutterCouchbaseLite.startReplicator("ws://localhost:4984/todolite", "PUSH_AND_PULL", <String, String>{
+//        'username': 'Administrator',
+//        'password': '123456789'
+//      });
+//      print(_cbInstance);
+//      _message = _cbInstance;
+    String msg = await FlutterCouchbaseLite.initDatabaseWithName("todolite");
+    print(msg);
+
+    String id = await FlutterCouchbaseLite.saveDocument(<String, Object>{
+        "id": 123,
+        "type": "SomeType"
+    });
+    print(id);
+
+    }catch (e){
+      print(e.toString());
     }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
     setState(() {
-      _platformVersion = platformVersion;
+      _message = _message;
     });
   }
 
@@ -48,7 +56,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: new Center(
-          child: new Text('Running on: $_platformVersion\n'),
+          child: new Text('Running on: $_message\n'),
         ),
       ),
     );

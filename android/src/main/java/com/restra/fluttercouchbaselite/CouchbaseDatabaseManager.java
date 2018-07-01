@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class CouchbaseDatabaseManager {
     private static final CouchbaseDatabaseManager mInstance = new CouchbaseDatabaseManager();
-    private Database mDatabase;
+    private Database mDatabase = null;
     private ReplicatorConfiguration mReplConfig;
     private Replicator mReplicator;
 
@@ -60,7 +60,7 @@ public class CouchbaseDatabaseManager {
         return mDatabase.getDocument(_id).toMap();
     }
 
-    public void initDatabaseWithName(String _name) throws Exception, CouchbaseLiteException {
+    public void initDatabaseWithName(String _name) throws Exception {
         DatabaseConfiguration config = new DatabaseConfiguration(FlutterCouchbaseLitePlugin.getActiveContext());
         mDatabase = new Database(_name, config);
     }
